@@ -23,12 +23,12 @@ Con este metodo, Node y NPM no estarán instalados en el equipo pero se podrán 
 ### Preparación del entorno
 
 1. Descargamos la última versión de los scripts en formato ZIP (`nvm-noinstall-noadmin-win-latest.zip`)
-2. Descomprimimos el zip y veremos una nueva carpeta (`nvm-noinstall-noadmin-win-lates`)
+2. Descomprimimos el zip y veremos una nueva carpeta (`nvm-noinstall-noadmin-win-latest`)
 3. Descargamos la versión deseada de NVM for Windows en formato noinstall desde el repo oficial https://github.com/coreybutler/nvm-windows
    - Recomiendo la version 1.1.12
    - Las descargas se encuentran en la parte de Releases: https://github.com/coreybutler/nvm-windows/releases/tag/1.1.12
    - Descarga el zip `nvm-noinstall.zip`
-4. Movemos `nvm-noinstall.zip` a la carpeta descompresa de `nvm-noinstall-noadmin-win-latest`
+4. Movemos `nvm-noinstall.zip` a la carpeta `nvm-noinstall-noadmin-win-latest`
 5. Ya estamos listos para instalar
 
 ### Instalación de NVM for Windows (versión noinstall)
