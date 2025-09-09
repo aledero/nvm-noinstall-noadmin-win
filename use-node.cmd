@@ -1,11 +1,11 @@
 @echo off
-:: Script:      use-node.bat
-:: Versión:     0.2
+:: Script:      use-node.cmd
+:: Versión:     0.3
 :: Uso:         use-node [NODEVERSION]
 :: Descripción: Habilita Node.js en la terminal actual con la versión especificada sin admin usando ruta donde se ecuentra el script (ruta de NVM (requerido))
 :: Autor:       Alejandro Delgado Rodríguez (aledero.com)
 
-echo use-node v0.2
+echo use-node v0.3
 echo [WARNING] Este script debe estar en la carpeta raiz de NVM for Windows (usando la version noinstall)
 echo [INFO] Con este script habilitaremos NodeJS en la version especificada para la terminal actual (requiere NVM)
 
@@ -22,7 +22,7 @@ if not "%1"=="" (
     :: Si no se pasa versión, intenta leerla desde .nvmrc
     if exist ".nvmrc" (
         for /f "delims=" %%v in (.nvmrc) do (
-            echo [INFO] .nvmrc detectado: v%%v
+            echo [INFO] .nvmrc detectado: %%v
             set VERSION=%%v
         )
     )
@@ -33,15 +33,39 @@ if "%VERSION%"=="" (
     echo [ERROR] No se ha indicado una version de Node como parametro ni declarado un fichero .nvmrc en la ruta actual
     exit /b 1
 )
-echo [INFO] Version a usar definida: v%VERSION%
+echo [INFO] Version solicitada: %VERSION%
 
-:: Comprobar si ya tenemos node activo en esa version
+goto checkMajor
+
+:: Bloques ::
+
+:checkMajor
+:: Detectar si VERSION tiene revisión (ej: x.x.x) o es solo major (ej: x)
+echo %VERSION% | findstr "\." >nul
+if %ERRORLEVEL%==0 (
+	:: No es major version
+	echo [INFO] Usaremos Node v%VERSION%
+	goto checkNode
+) else (
+	:: Es una major version
+	goto resolveMajor
+)
+
+:resolveMajor
+echo [INFO] Se ha detectado una major version (%VERSION%), buscando instaladas...
+for /f "delims=" %%d in ('dir /b /ad "%SCRIPT_DIR%v%VERSION%.*" 2^>nul') do set "RESOLVED_VERSION=%%d"
+
+if "%RESOLVED_VERSION%"=="" (
+    echo [INFO] No se encontro instalada ninguna %VERSION%.x, se instalara la ultima.
+) else (
+    :: quitamos la "v" al inicio
+    set VERSION=%RESOLVED_VERSION:~1%
+    echo [INFO] Se selecciono la version instalada mas alta: %RESOLVED_VERSION%
+)
 goto checkNode
 
 :checkNode
 echo [INFO] Comprobando version en uso de node...
-
-@echo off
 for /f "delims=" %%a in ('node -v 2^>nul') do set "NODE_NEW_VERSION=%%a"
 if "%NODE_NEW_VERSION%"=="v%VERSION%" (
 	:: Node ya está activo en la version concreta
@@ -82,11 +106,9 @@ if exist "%NODE_DIR%\node.exe" (
 ) else (
 	:: Mostramos error e instalamos
 	echo [ERROR] La version v%VERSION% no esta instalada en: %NODE_DIR%
-	echo [INFO] Vamos a proceder a instalar esa version de node. Si no quieres, termina la ejecucion.
-	echo Pulse cualquier tecla para continuar con la instalacion...
-	pause>nul
-	echo [INFO] Instalando...
+	echo [INFO] Instalando con NVM...
 	call nvm install %VERSION%
 	
-	goto searchForNode
+	echo [INFO] Repetimos comprobaciones...
+	goto resolveMajor
 )
