@@ -1,6 +1,6 @@
 @echo off
 
-:: use-node-git v0.3
+:: use-node-git v0.3.1 (blackbox)
 :: This enables node when using git!
 
 :: Search and set defined VERSION
@@ -43,21 +43,9 @@ if "%RESOLVED_VERSION%"=="" (
 )
 
 :searchForNode
-if exist "%NODE_DIR%\node.exe" (
     :: Add NODE_DIR to PATH
     set PATH=%NODE_DIR%;%PATH%
 	goto continueGit
-) else if exist "%NODE_DIR%\node64.exe" (
-	:: Copy node64.exe to node.exe para usar comando node
-	copy "%NODE_DIR%\node64.exe" "%NODE_DIR%\node.exe"
-	:: Add NODE_DIR al PATH
-	set PATH=%NODE_DIR%;%PATH%	
-	goto continueGit
-) else (
-	:: Node not installed, fail
-	goto nodeNotInstalled
-)
-
 :nodeNotInstalled
 echo [ERROR] NODE v%VERSION% NOT INSTALLED! EXECUTE use-node ONCE BEFORE USING git.cmd
 exit /b 1

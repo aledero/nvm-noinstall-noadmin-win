@@ -3,7 +3,7 @@
 NVM NoIntsall NoAdmin Windows (NVM for Windows sin Privilegios de Administrador)
 
 - Licencia: MIT License
-- Versión: 0.3
+- Versión: 0.3.1 (blackbox)
 - Autor: Alejandro Delgado Rodríguez (aledero.com)
 
 Este script permite instalar y gestionar múltiples versiones de Node.js en Windows sin necesidad de permisos de administrador, ideal para entornos corporativos donde no se puede usar `nvm-windows` por restricciones del sistema.
@@ -13,6 +13,8 @@ Este script permite instalar y gestionar múltiples versiones de Node.js en Wind
 - Descarga y cambia entre versiones de NodeJS con NVM for Windows
 - Uso completamente desde CMD
 - No requiere permisos de administrador
+- No requiere 7zip
+- No requiere de acceso a los servidores de node
 - Ideal para trabajar con varios proyectos simultáneamente
 - No requiere instalación
 
@@ -22,21 +24,23 @@ Con este metodo, Node y NPM no estarán instalados en el equipo pero se podrán 
 
 ### Preparación del entorno
 
-1. Descargamos la última versión de los scripts en formato ZIP (`nvm-noinstall-noadmin-win.zip`)
-2. Descomprimimos el zip en una nueva carpeta (`nvm-noinstall-noadmin-win`)
-3. Descargamos la versión deseada de NVM for Windows en formato noinstall desde el repo oficial https://github.com/coreybutler/nvm-windows
-   - Recomiendo la version 1.1.12
-   - Las descargas se encuentran en la parte de Releases: https://github.com/coreybutler/nvm-windows/releases/tag/1.1.12
-   - Descarga el zip `nvm-noinstall.zip`
-4. Movemos `nvm-noinstall.zip` a la carpeta descompresa de `nvm-noinstall-noadmin-win`
-5. Ya estamos listos para instalar
+1. Descargamos la versión blackbox de los scripts en formato ZIP (`nvm-noinstall-noadmin-win-blackbox.zip`)
+2. Descomprimimos el zip en una nueva carpeta (`nvm-noinstall-noadmin-win-blackbox`)
+3. Ya estamos listos para instalar
 
 **IMPORTANTE**: Al haber sido descargado de internet, es probable que te salte una advertencia de Windows SmartScreen sobre que el fichero puede ser peligroso. Puedes evitarlo en Propiedades > Desbloquear o simplemente dándole a Más Información > Ejecutar de todas formas. Siempre que se haya descargado de este repo, el fichero es totalmente seguro.
 
-### Instalación de NVM for Windows (versión noinstall)
+### Instalación
 
-1. En una carpeta debemos de tener:
-   - nvm-noinstall.zip
+1. En la carpeta `nvm-noinstall-noadmin-win-blackbox` debemos de tener:
+   - nvm-noinstall-base
+     - elevate.cmd
+     - elevate.vbs
+     - install.cmd
+     - nodejs.ico
+     - nvm.exe
+     - setuserenv.vbs
+     - unsetuserenv.vbs
    - install-nvm.cmd
    - use-node.cmd
    - git.cmd
@@ -47,22 +51,17 @@ Con este metodo, Node y NPM no estarán instalados en el equipo pero se podrán 
 
 Ya podrás usar los comandos nvm y use-node
 
-### Instala las versiones que necesites de Node con NVM
-
-1. Ejecuta `nvm install VERSION` escribiendo la que quieras
-2. Listo.
-
 ### Usa Node y NPM en una terminal (especificando versión)
 
 1. Ejecuta `use-node VERSION` en la terminal para habilitar node en esa terminal
-2. En el caso en que no esté instalada la versión deseada, te preguntará si quieres instalarlo
+2. En el caso en que no esté instalada la versión deseada, deberás añadirla manualmente
 3. Ya puedes usar node y npm
 
 ### Usa Node y NPM en una terminal con .nvmrc (usando el fichero .nvmrc de la raíz de un proyecto)
 
 1. Posicionate en la raiz del proyecto que contenga el fichero `.nvmrc`
 2. Ejecuta `use-node` en la terminal para habilitar node en esa terminal
-3. En el caso en que no esté instalada la versión deseada, te preguntará si quieres instalarlo
+3. En el caso en que no esté instalada la versión deseada, deberás añadirla manualmente
 4. Ya puedes usar node y npm
 
 ### Fichero .nvmrc

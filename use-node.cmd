@@ -5,7 +5,7 @@
 :: Descripción: Habilita Node.js en la terminal actual con la versión especificada sin admin usando ruta donde se ecuentra el script (ruta de NVM (requerido))
 :: Autor:       Alejandro Delgado Rodríguez (aledero.com)
 
-echo use-node v0.3
+echo use-node v0.3.1 (blackbox)
 echo [WARNING] Este script debe estar en la carpeta raiz de NVM for Windows (usando la version noinstall)
 echo [INFO] Con este script habilitaremos NodeJS en la version especificada para la terminal actual (requiere NVM)
 
@@ -86,29 +86,9 @@ goto checkNode
 
 :: Buscar ejecutables de node
 :searchForNode
-echo [INFO] Buscando ejecutables de node...
-if exist "%NODE_DIR%\node.exe" (
-    :: Añadimos NODE_DIR al PATH
-	echo [INFO] Encontrado: %NODE_DIR%\node.exe
-    set PATH=%NODE_DIR%;%PATH%
-	
-	goto checkNode
-) else if exist "%NODE_DIR%\node64.exe" (
-	:: Añadimos NODE_DIR al PATH
-	echo [INFO] Encontrado: %NODE_DIR%\node64.exe
-	set PATH=%NODE_DIR%;%PATH%
-	
-	:: Creamos fichero node.exe para usar comando node
-	echo [INFO] Creando fichero node.exe para poder usar comando node...
-	copy "%NODE_DIR%\node64.exe" "%NODE_DIR%\node.exe"
-	
-	goto checkNode
-) else (
-	:: Mostramos error e instalamos
-	echo [ERROR] La version v%VERSION% no esta instalada en: %NODE_DIR%
-	echo [INFO] Instalando con NVM...
-	call nvm install %VERSION%
-	
-	echo [INFO] Repetimos comprobaciones...
-	goto resolveMajor
-)
+
+:: Añadimos NODE_DIR al PATH
+echo [INFO] Encontrado: %NODE_DIR%\node.exe
+set PATH=%NODE_DIR%;%PATH%
+
+goto checkNode

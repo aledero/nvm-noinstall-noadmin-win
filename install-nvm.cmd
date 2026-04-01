@@ -1,16 +1,15 @@
 @echo off
 :: Script:      install-nvm.cmd
-:: Version:     0.3
+:: Version:     0.3.1 (blackbox)
 :: Uso:         install-nvm
 :: Descripcion: Crea y descomprime la version noinstall de NVM for Windows en la carpeta AppData/Local/nvm y habilitaremos NVM for Windows y use-node para que puedan ser usados
 :: Autor:       Alejandro Delgado Rodríguez (aledero.com)
 
-echo install-nvm v0.3
+echo install-nvm v0.3.1 (blackbox)
 echo [INFO] Con este script:
-echo 1. Descomprimimos la version noinstall de NVM for Windows en la ruta especificada (o recomendada)
-echo 2. Habilitamos NVM for Windows
-echo 3. Habilitamos use-node
-echo 4. Habilitamos git.cmd (para hooks)
+echo 1. Habilitamos NVM for Windows
+echo 2. Habilitamos use-node
+echo 3. Habilitamos git.cmd (para hooks)
 
 :: Obtener ruta de donde instalar nvm (NVM_PARENT_PATH)
 set NVM_PARENT_PATH=%USERPROFILE%\AppData\Local
@@ -24,9 +23,10 @@ if "%TEMP_NVM_PARENT_PATH%"=="" (
 set NVM_HOME=%NVM_PARENT_PATH%\nvm
 echo [INFO] Ruta definida: %NVM_HOME%
 
-:: Descomprime NVM
-echo [INFO] Descomprimiendo nvm-noinstall con 7Zip en la carpeta %NVM_HOME%...
-"C:\Program Files\7-Zip\7z.exe" e nvm-noinstall.zip -o%NVM_HOME%
+
+:: Crea carpeta NVM
+echo [INFO] Creamos carpeta %NVM_HOME% y movemos el contenido de nvm base...
+copy nvm-noinstall-base %NVM_HOME%
 
 :: Mover scripts a carpeta de instalación
 echo [INFO] Copiando use-node.cmd a %NVM_HOME%...
