@@ -3,10 +3,10 @@
 NVM NoIntsall NoAdmin Windows (NVM for Windows sin Privilegios de Administrador)
 
 - Licencia: MIT License
-- Versión: 0.3.1 (blackbox)
+- Versión: 0.3.2 (blackbox)
 - Autor: Alejandro Delgado Rodríguez (aledero.com)
 
-Este script permite instalar y gestionar múltiples versiones de Node.js en Windows sin necesidad de permisos de administrador, ideal para entornos corporativos donde no se puede usar `nvm-windows` por restricciones del sistema.
+Este script permite instalar y gestionar múltiples versiones de Node.js en Windows sin necesidad de permisos de administrador, ideal para entornos corporativos donde no se puede usar `nvm-windows` por restricciones del sistema. En esta versión, blackbox, se limitan algunas funcionalidades para adaptarlo a entornos en los que ni siquiera se puede acceder a internet (necesitarás añadir manualmente las versiones de node a usar)
 
 ## 🚀 Características
 
@@ -43,26 +43,39 @@ Con este metodo, Node y NPM no estarán instalados en el equipo pero se podrán 
      - unsetuserenv.vbs
    - install-nvm.cmd
    - use-node.cmd
-   - git.cmd
+   - use-node-git.cmd
+   - use-node-exec.cmd
 2. Ejecutamos, por cmd o con doble click el script `install-nvm.cmd`
 3. Preguntará por la ruta de instalación. Recomiendo no introducir nada y que siga con la recomendada (`UserAppData\Local\nvm`)
 4. Al finalizar, te creará un fichero `LEEME.txt` en la carpeta de instalación de NVM. Ábrelo y crea esas 2 variables de entorno de usuario de Windows (NVM_HOME y NVM_SYMLINK) y añádelas al PATH de esta forma: %NVM_HOME%;%NVM_SYMLINK%
 5. Pulsa cualquier tecla para cerrar el script y listo.
 
-Ya podrás usar los comandos nvm y use-node
+Ya podrás usar los comandos nvm, use-node, use-node-git y use-node-exec
 
-### Usa Node y NPM en una terminal (especificando versión)
+### Usa Node y NPM en una terminal (especificando versión) (blackbox)
 
 1. Ejecuta `use-node VERSION` en la terminal para habilitar node en esa terminal
 2. En el caso en que no esté instalada la versión deseada, deberás añadirla manualmente
 3. Ya puedes usar node y npm
 
-### Usa Node y NPM en una terminal con .nvmrc (usando el fichero .nvmrc de la raíz de un proyecto)
+### Usa Node y NPM en una terminal con .nvmrc (usando el fichero .nvmrc de la raíz de un proyecto) (blackbox)
 
 1. Posicionate en la raiz del proyecto que contenga el fichero `.nvmrc`
 2. Ejecuta `use-node` en la terminal para habilitar node en esa terminal
 3. En el caso en que no esté instalada la versión deseada, deberás añadirla manualmente
 4. Ya puedes usar node y npm
+
+### Usa Node y NPM en git con .nvmrc (usando el fichero .nvmrc de la raíz de un proyecto) (blackbox)
+
+1. Posicionate en la raiz del proyecto que contenga el fichero `.nvmrc`
+2. Ejecuta `use-node-git status/pull/push/...` en la terminal para habilitar node y ejecutar un comando de git
+3. En el caso en que no esté instalada la versión deseada, deberás añadirla manualmente
+
+### Usa Node y NPM con cualquier comando con .nvmrc (usando el fichero .nvmrc de la raíz de un proyecto) (blackbox)
+
+1. Posicionate en la raiz del proyecto que contenga el fichero `.nvmrc`
+2. Ejecuta `use-node-exec ANYCOMMAND` en la terminal para habilitar node y ejecutar un comando de cmd
+3. En el caso en que no esté instalada la versión deseada, deberás añadirla manualmente
 
 ### Fichero .nvmrc
 

@@ -1,11 +1,11 @@
 @echo off
 :: Script:      use-node.cmd
-:: Versión:     0.3
+:: Versión:     0.3.2 (blackbox)
 :: Uso:         use-node [NODEVERSION]
 :: Descripción: Habilita Node.js en la terminal actual con la versión especificada sin admin usando ruta donde se ecuentra el script (ruta de NVM (requerido))
 :: Autor:       Alejandro Delgado Rodríguez (aledero.com)
 
-echo use-node v0.3.1 (blackbox)
+echo use-node v0.3.2 (blackbox)
 echo [WARNING] Este script debe estar en la carpeta raiz de NVM for Windows (usando la version noinstall)
 echo [INFO] Con este script habilitaremos NodeJS en la version especificada para la terminal actual (requiere NVM)
 

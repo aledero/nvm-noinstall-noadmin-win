@@ -1,15 +1,16 @@
 @echo off
 :: Script:      install-nvm.cmd
-:: Version:     0.3.1 (blackbox)
+:: Version:     0.3.2 (blackbox)
 :: Uso:         install-nvm
 :: Descripcion: Crea y descomprime la version noinstall de NVM for Windows en la carpeta AppData/Local/nvm y habilitaremos NVM for Windows y use-node para que puedan ser usados
 :: Autor:       Alejandro Delgado Rodríguez (aledero.com)
 
-echo install-nvm v0.3.1 (blackbox)
+echo install-nvm v0.3.2 (blackbox)
 echo [INFO] Con este script:
 echo 1. Habilitamos NVM for Windows
 echo 2. Habilitamos use-node
-echo 3. Habilitamos git.cmd (para hooks)
+echo 3. Habilitamos use-node-git (para hooks)
+echo 4. Habilitamos use-node-exec (para ejecutar cualquier comando con node habilitado)
 
 :: Obtener ruta de donde instalar nvm (NVM_PARENT_PATH)
 set NVM_PARENT_PATH=%USERPROFILE%\AppData\Local
@@ -31,8 +32,10 @@ copy nvm-noinstall-base %NVM_HOME%
 :: Mover scripts a carpeta de instalación
 echo [INFO] Copiando use-node.cmd a %NVM_HOME%...
 copy use-node.cmd %NVM_HOME%
-echo [INFO] Copiando git.cmd a %NVM_HOME%...
-copy git.cmd %NVM_HOME%
+echo [INFO] Copiando use-node-git.cmd a %NVM_HOME%...
+copy use-node-git.cmd %NVM_HOME%
+echo [INFO] Copiando use-node-exec.cmd a %NVM_HOME%...
+copy use-node-exec.cmd %NVM_HOME%
 
 :: Detectar carpeta actual como base para SYMLINK (donde está NVM)
 set NVM_SYMLINK=%NVM_HOME%\nodejs
