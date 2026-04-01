@@ -1,16 +1,17 @@
 @echo off
 :: Script:      install-nvm.cmd
-:: Version:     0.3
+:: Version:     0.4
 :: Uso:         install-nvm
-:: Descripcion: Crea y descomprime la version noinstall de NVM for Windows en la carpeta AppData/Local/nvm y habilitaremos NVM for Windows y use-node para que puedan ser usados
+:: Descripcion: Instala NVM for Windows (noinstall) en la carpeta AppData/Local/nvm y habilita NVM for Windows, use-node, use-node-git y use-node-exec para que puedan ser usados
 :: Autor:       Alejandro Delgado Rodríguez (aledero.com)
 
-echo install-nvm v0.3
+echo install-nvm v0.4
 echo [INFO] Con este script:
-echo 1. Descomprimimos la version noinstall de NVM for Windows en la ruta especificada (o recomendada)
+echo 1. Instalamos version noinstall de NVM for Windows en la ruta especificada (o recomendada)
 echo 2. Habilitamos NVM for Windows
 echo 3. Habilitamos use-node
-echo 4. Habilitamos git.cmd (para hooks)
+echo 4. Habilitamos use-node-git (para hooks)
+echo 5. Habilitamos use-node-exec (para ejecutar cualquier comando con node habilitado)
 
 :: Obtener ruta de donde instalar nvm (NVM_PARENT_PATH)
 set NVM_PARENT_PATH=%USERPROFILE%\AppData\Local
@@ -24,15 +25,17 @@ if "%TEMP_NVM_PARENT_PATH%"=="" (
 set NVM_HOME=%NVM_PARENT_PATH%\nvm
 echo [INFO] Ruta definida: %NVM_HOME%
 
-:: Descomprime NVM
-echo [INFO] Descomprimiendo nvm-noinstall con 7Zip en la carpeta %NVM_HOME%...
-"C:\Program Files\7-Zip\7z.exe" e nvm-noinstall.zip -o%NVM_HOME%
+:: Crea carpeta NVM copiando nvm-noinstall
+echo [INFO] Creamos carpeta %NVM_HOME% y movemos el contenido de nvm base...
+copy nvm-noinstall-base %NVM_HOME%
 
 :: Mover scripts a carpeta de instalación
 echo [INFO] Copiando use-node.cmd a %NVM_HOME%...
 copy use-node.cmd %NVM_HOME%
-echo [INFO] Copiando git.cmd a %NVM_HOME%...
-copy git.cmd %NVM_HOME%
+echo [INFO] Copiando use-node-git.cmd a %NVM_HOME%...
+copy use-node-git.cmd %NVM_HOME%
+echo [INFO] Copiando use-node-exec.cmd a %NVM_HOME%...
+copy use-node-exec.cmd %NVM_HOME%
 
 :: Detectar carpeta actual como base para SYMLINK (donde está NVM)
 set NVM_SYMLINK=%NVM_HOME%\nodejs

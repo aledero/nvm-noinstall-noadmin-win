@@ -1,11 +1,11 @@
 @echo off
 :: Script:      use-node.cmd
-:: Versión:     0.3
+:: Versión:     0.4
 :: Uso:         use-node [NODEVERSION]
 :: Descripción: Habilita Node.js en la terminal actual con la versión especificada sin admin usando ruta donde se ecuentra el script (ruta de NVM (requerido))
 :: Autor:       Alejandro Delgado Rodríguez (aledero.com)
 
-echo use-node v0.3
+echo use-node v0.4
 echo [WARNING] Este script debe estar en la carpeta raiz de NVM for Windows (usando la version noinstall)
 echo [INFO] Con este script habilitaremos NodeJS en la version especificada para la terminal actual (requiere NVM)
 
@@ -21,10 +21,8 @@ if not "%1"=="" (
 ) else (
     :: Si no se pasa versión, intenta leerla desde .nvmrc
     if exist ".nvmrc" (
-        for /f "delims=" %%v in (.nvmrc) do (
-            echo [INFO] .nvmrc detectado: %%v
-            set VERSION=%%v
-        )
+        echo [INFO] .nvmrc detectado! Leyendo version...
+        for /f "delims=" %%v in (.nvmrc) do set VERSION=%%v
     )
 )
 
@@ -93,22 +91,24 @@ if exist "%NODE_DIR%\node.exe" (
     set PATH=%NODE_DIR%;%PATH%
 	
 	goto checkNode
-) else if exist "%NODE_DIR%\node64.exe" (
-	:: Añadimos NODE_DIR al PATH
-	echo [INFO] Encontrado: %NODE_DIR%\node64.exe
-	set PATH=%NODE_DIR%;%PATH%
-	
-	:: Creamos fichero node.exe para usar comando node
-	echo [INFO] Creando fichero node.exe para poder usar comando node...
-	copy "%NODE_DIR%\node64.exe" "%NODE_DIR%\node.exe"
-	
-	goto checkNode
 ) else (
-	:: Mostramos error e instalamos
-	echo [ERROR] La version v%VERSION% no esta instalada en: %NODE_DIR%
-	echo [INFO] Instalando con NVM...
-	call nvm install %VERSION%
-	
-	echo [INFO] Repetimos comprobaciones...
-	goto resolveMajor
+	if exist "%NODE_DIR%\node64.exe" (
+		:: Añadimos NODE_DIR al PATH
+		echo [INFO] Encontrado: %NODE_DIR%\node64.exe
+		set PATH=%NODE_DIR%;%PATH%
+		
+		:: Creamos fichero node.exe para usar comando node
+		echo [INFO] Creando fichero node.exe para poder usar comando node...
+		copy "%NODE_DIR%\node64.exe" "%NODE_DIR%\node.exe"
+		
+		goto checkNode
+	) else (
+		:: Mostramos error e instalamos
+		echo [ERROR] La version v%VERSION% no esta instalada en: %NODE_DIR%
+		echo [INFO] Instalando con NVM...
+		call nvm install %VERSION%
+		
+		echo [INFO] Repetimos comprobaciones...
+		goto resolveMajor
+	)
 )
